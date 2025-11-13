@@ -65,7 +65,7 @@ pub trait AppRegistry<T: pallet::Config> {
 	fn transition_weight(params: &ParamsOf<T>) -> Weight;
 }
 
-#[derive(Encode, Decode, Clone, PartialEq, RuntimeDebug, TypeInfo)]
+#[derive(Encode, Decode, Clone, PartialEq, RuntimeDebug, TypeInfo, DecodeWithMemTracking)]
 #[codec(dumb_trait_bound)]
 /// Fixed parameters of a channel.
 ///
@@ -101,7 +101,9 @@ where
 	}
 }
 
-#[derive(Encode, Decode, Default, Clone, PartialEq, RuntimeDebug, TypeInfo)]
+#[derive(
+	Encode, Decode, Default, Clone, PartialEq, RuntimeDebug, TypeInfo, DecodeWithMemTracking,
+)]
 #[codec(dumb_trait_bound)]
 /// Off-Chain state of a channel.
 pub struct State<ChannelId, Version, Balance> {
@@ -160,7 +162,7 @@ pub struct RegisteredState<State, Seconds> {
 	pub timeout: Seconds,
 }
 
-#[derive(Encode, Decode, Copy, Clone, PartialEq, RuntimeDebug, TypeInfo)]
+#[derive(Encode, Decode, Copy, Clone, PartialEq, RuntimeDebug, TypeInfo, DecodeWithMemTracking)]
 #[codec(dumb_trait_bound)]
 /// Withdrawal authorization for on-chain funds.
 ///

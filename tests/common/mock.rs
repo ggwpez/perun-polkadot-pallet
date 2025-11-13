@@ -12,9 +12,9 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-use pallet_balances;
-
 use super::utils::increment_time;
+use pallet_balances;
+use polkadot_sdk::*;
 
 use frame_support::{derive_impl, parameter_types, weights::Weight, PalletId};
 use pallet_perun::types::{
@@ -85,6 +85,7 @@ impl pallet_balances::Config for Test {
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = frame_system::Pallet<Test>;
 	type WeightInfo = ();
+	type DoneSlashHandler = ();
 
 	type RuntimeHoldReason = ();
 	type RuntimeFreezeReason = ();
@@ -111,7 +112,6 @@ parameter_types! {
 	pub const NoApp: u64 = NO_APP;
 }
 impl pallet_perun::Config for Test {
-	type RuntimeEvent = RuntimeEvent;
 	type PalletId = PerunPalletId;
 	type MinDeposit = PerunMinDeposit;
 	type ParticipantNum = PerunParticipantNum;
@@ -240,6 +240,7 @@ pub fn run_test(app: AppIdOf<Test>, test: fn(&Setup) -> ()) {
 				(setup.ids.carl, BalanceOf::<Test>::MAX / 2),
 				(setup.ids.dora, 1),
 			],
+			dev_accounts: None,
 		},
 	}
 	.build_storage()
