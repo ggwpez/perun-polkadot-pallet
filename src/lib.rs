@@ -24,6 +24,7 @@
 #![deny(rustdoc::broken_intra_doc_links)]
 
 use crate::types::*;
+use polkadot_sdk::*;
 
 #[cfg(feature = "runtime-benchmarks")]
 mod benchmarking;
@@ -64,7 +65,7 @@ pub mod pallet {
 	use sp_runtime::traits::{CheckedAdd, Member};
 
 	#[pallet::config]
-	pub trait Config: frame_system::Config + pallet_timestamp::Config {
+	pub trait Config: polkadot_sdk::frame_system::Config + pallet_timestamp::Config {
 		/// ID of this pallet.
 		///
 		/// Only used to derive the pallets account.
@@ -80,9 +81,6 @@ pub mod pallet {
 		/// Valid range for the number of participants in a channel.
 		#[pallet::constant]
 		type ParticipantNum: Get<Range<ParticipantIndex>>;
-
-		/// Because this pallet emits events, it depends on the runtime's definition of an event.
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 
 		/// On-Chain currency that should be used by the Perun Pallet.
 		type Currency: Currency<Self::AccountId>;

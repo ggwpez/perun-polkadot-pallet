@@ -15,6 +15,7 @@
 //! Channel types and type defs.
 
 use crate::*;
+use polkadot_sdk::*;
 
 use crate::pallet::Config;
 use codec::{Decode, Encode};
